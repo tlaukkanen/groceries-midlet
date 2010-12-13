@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MVDData version="1.1">
+    <DesignDocument designVersion="MIDP-2">
+        <DesignComponent id="$MobileDevice" typeid="MIDP:$MobileDevice"/>
+        <DesignComponent id="$StartPoint" typeid="MIDP:$StartPoint">
+            <Property name="targetDisplayable" value="splashScreen"/>
+            <Property name="targetForwardDisplayable"/>
+        </DesignComponent>
+        <DesignComponent id="listOfLists" typeid="MIDP:javax.microedition.lcdui.List">
+            <Property name="title" value="STRING:Grocery Lists"/>
+            <Property name="choiceType" value="IMPLICIT"/>
+            <Property name="fitPolicy" value="TEXT_WRAP_ON"/>
+            <Property name="selectCommandAction" value="$SelectCommandAction1"/>
+            <Property name="selectCommand" value="openListCommand"/>
+            <Property name="indexBasedSwitch" value="true"/>
+            <ContainerProperty name="commands">
+                <ContainerPropertyItem value="$CommandAction1"/>
+                <ContainerPropertyItem value="$CommandAction2"/>
+                <ContainerPropertyItem value="$CommandAction5"/>
+                <ContainerPropertyItem value="$CommandAction6"/>
+                <ContainerPropertyItem value="$CommandAction10"/>
+                <ContainerPropertyItem value="$CommandAction15"/>
+            </ContainerProperty>
+            <ContainerProperty name="elements"/>
+        </DesignComponent>
+        <DesignComponent id="$SelectCommandAction1" typeid="MIDP:SelectCommandAction">
+            <Property name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property name="actionOrigin" value="listOfLists"/>
+            <Property name="selectCommand" value="openListCommand"/>
+        </DesignComponent>
+        <DesignComponent id="exitCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Exit"/>
+            <Property name="priority" value="5"/>
+            <Property name="type" value="EXIT"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction1" typeid="MIDP:CommandAction">
+            <Property name="preUserCode" value="try{\n    m_manager.save();\n    m_settings.save(true);\n}catch(Exception e){\n    // Do nothing\n}"/>
+            <Property name="targetDisplayable" value="$MobileDevice"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property name="actionSource" value="exitCommand"/>
+            <Property name="actionOrigin" value="listOfLists"/>
+        </DesignComponent>
+        <DesignComponent id="addListCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Add List"/>
+            <Property name="priority" value="2"/>
+            <Property name="type" value="SCREEN"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction2" typeid="MIDP:CommandAction">
+            <Property name="postUserCode" value="listNameTextField.setString(\&quot;\&quot;);"/>
+            <Property name="targetDisplayable" value="addListForm"/>
+            <Property name="targetForwardDisplayable" value="listOfLists"/>
+            <Property name="actionSource" value="addListCommand"/>
+            <Property name="actionOrigin" value="listOfLists"/>
+        </DesignComponent>
+        <DesignComponent id="addListForm" typeid="MIDP:javax.microedition.lcdui.Form">
+            <Property name="title" value="STRING:Add List"/>
+            <ContainerProperty name="commands">
+                <ContainerPropertyItem value="$CommandAction3"/>
+                <ContainerPropertyItem value="$CommandAction4"/>
+            </ContainerProperty>
+            <ContainerProperty name="items">
+                <ContainerPropertyItem value="listNameTextField"/>
+            </ContainerProperty>
+        </DesignComponent>
+        <DesignComponent id="okAddListCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Ok"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="OK"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction3" typeid="MIDP:CommandAction">
+            <Property name="preUserCode" value="GroceryList list = new GroceryList(\n        listNameTextField.getString(), \n        null);\nm_manager.add( list );\nrefreshList();"/>
+            <Property name="targetDisplayable" value="listOfLists"/>
+            <Property name="targetForwardDisplayable" value="addListForm"/>
+            <Property name="actionSource" value="okAddListCommand"/>
+            <Property name="actionOrigin" value="addListForm"/>
+        </DesignComponent>
+        <DesignComponent id="cancelCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Cancel"/>
+            <Property name="priority" value="2"/>
+            <Property name="type" value="CANCEL"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction4" typeid="MIDP:CommandAction">
+            <Property name="targetDisplayable" value="listOfLists"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property name="actionSource" value="cancelCommand"/>
+            <Property name="actionOrigin" value="addListForm"/>
+        </DesignComponent>
+        <DesignComponent id="deleteListCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Delete List"/>
+            <Property name="priority" value="3"/>
+            <Property name="type" value="ITEM"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction5" typeid="MIDP:CommandAction">
+            <Property name="preUserCode" value="m_selectedList = m_manager.getList(\n        listOfLists.getString( listOfLists.getSelectedIndex() ) );\nm_manager.delete( m_selectedList );\nrefreshList();"/>
+            <Property name="targetDisplayable" value="listOfLists"/>
+            <Property name="targetForwardDisplayable" value="listOfLists"/>
+            <Property name="actionSource" value="deleteListCommand"/>
+            <Property name="actionOrigin" value="listOfLists"/>
+        </DesignComponent>
+        <DesignComponent id="openListCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Open List"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="SCREEN"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction6" typeid="MIDP:CommandAction">
+            <Property name="postUserCode" value="m_selectedList = m_manager.getList(\n        listOfLists.getString( listOfLists.getSelectedIndex() ) );\nrefreshSelectedToList();"/>
+            <Property name="targetDisplayable" value="groceryList"/>
+            <Property name="targetForwardDisplayable" value="listOfLists"/>
+            <Property name="actionSource" value="openListCommand"/>
+            <Property name="actionOrigin" value="listOfLists"/>
+        </DesignComponent>
+        <DesignComponent id="groceryList" typeid="MIDP:javax.microedition.lcdui.List">
+            <Property name="title" value="STRING:Groceries"/>
+            <Property name="choiceType" value="MULTIPLE"/>
+            <Property name="selectCommandAction" value="$SelectCommandAction2"/>
+            <Property name="selectCommand" value="selectItem"/>
+            <Property name="indexBasedSwitch" value="true"/>
+            <ContainerProperty name="commands">
+                <ContainerPropertyItem value="$CommandAction7"/>
+                <ContainerPropertyItem value="$CommandAction8"/>
+                <ContainerPropertyItem value="$CommandAction16"/>
+                <ContainerPropertyItem value="$CommandAction22"/>
+            </ContainerProperty>
+            <ContainerProperty name="elements"/>
+        </DesignComponent>
+        <DesignComponent id="$SelectCommandAction2" typeid="MIDP:SelectCommandAction">
+            <Property name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property name="actionOrigin" value="groceryList"/>
+            <Property name="selectCommand" value="selectItem"/>
+        </DesignComponent>
+        <DesignComponent id="addItemCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Add Item"/>
+            <Property name="priority" value="2"/>
+            <Property name="type" value="SCREEN"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction7" typeid="MIDP:CommandAction">
+            <Property name="preUserCode" value="refreshSelectedFromList();"/>
+            <Property name="postUserCode" value="addItemTextField.setString(\&quot;\&quot;);"/>
+            <Property name="targetDisplayable" value="addItemForm"/>
+            <Property name="targetForwardDisplayable" value="groceryList"/>
+            <Property name="actionSource" value="addItemCommand"/>
+            <Property name="actionOrigin" value="groceryList"/>
+        </DesignComponent>
+        <DesignComponent id="backCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Back"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="BACK"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction8" typeid="MIDP:CommandAction">
+            <Property name="preUserCode" value="refreshSelectedFromList();\nm_manager.update( m_selectedList );"/>
+            <Property name="targetDisplayable" value="listOfLists"/>
+            <Property name="targetForwardDisplayable" value="groceryList"/>
+            <Property name="actionSource" value="backCommand"/>
+            <Property name="actionOrigin" value="groceryList"/>
+        </DesignComponent>
+        <DesignComponent id="backEditCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Back"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="BACK"/>
+        </DesignComponent>
+        <DesignComponent id="listNameTextField" typeid="MIDP:javax.microedition.lcdui.TextField">
+            <Property name="label" value="STRING:Grocery List Name"/>
+            <Property name="maxSize" value="120"/>
+            <ContainerProperty name="commands"/>
+        </DesignComponent>
+        <DesignComponent id="aboutForm" typeid="MIDP:javax.microedition.lcdui.Form">
+            <Property name="title" value="STRING:About"/>
+            <ContainerProperty name="commands">
+                <ContainerPropertyItem value="$CommandAction11"/>
+            </ContainerProperty>
+            <ContainerProperty name="items">
+                <ContainerPropertyItem value="stringItem1"/>
+                <ContainerPropertyItem value="spacer1"/>
+                <ContainerPropertyItem value="stringItem3"/>
+                <ContainerPropertyItem value="stringItem2"/>
+            </ContainerProperty>
+        </DesignComponent>
+        <DesignComponent id="aboutCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:About"/>
+            <Property name="priority" value="4"/>
+            <Property name="type" value="SCREEN"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction10" typeid="MIDP:CommandAction">
+            <Property name="targetDisplayable" value="aboutForm"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property name="actionSource" value="aboutCommand"/>
+            <Property name="actionOrigin" value="listOfLists"/>
+        </DesignComponent>
+        <DesignComponent id="stringItem1" typeid="MIDP:javax.microedition.lcdui.StringItem">
+            <Property name="label" value="STRING:Groceries v1.1 "/>
+            <Property name="text" value="STRING:Copyright (C) 2005\nTommi Laukkanen\nwww.substanceofcode.com"/>
+            <ContainerProperty name="commands"/>
+        </DesignComponent>
+        <DesignComponent id="backCommand1" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Back"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="BACK"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction11" typeid="MIDP:CommandAction">
+            <Property name="targetDisplayable" value="listOfLists"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property name="actionSource" value="backCommand1"/>
+            <Property name="actionOrigin" value="aboutForm"/>
+        </DesignComponent>
+        <DesignComponent id="backEditCommand1" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Back"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="BACK"/>
+        </DesignComponent>
+        <DesignComponent id="nextItemCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Next"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="ITEM"/>
+        </DesignComponent>
+        <DesignComponent id="renameListForm" typeid="MIDP:javax.microedition.lcdui.Form">
+            <Property name="title" value="STRING:Rename List"/>
+            <ContainerProperty name="commands">
+                <ContainerPropertyItem value="$CommandAction13"/>
+                <ContainerPropertyItem value="$CommandAction14"/>
+            </ContainerProperty>
+            <ContainerProperty name="items">
+                <ContainerPropertyItem value="newNameTextField"/>
+            </ContainerProperty>
+        </DesignComponent>
+        <DesignComponent id="okRenameCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Ok"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="OK"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction13" typeid="MIDP:CommandAction">
+            <Property name="preUserCode" value="m_manager.delete( m_selectedList );\nm_selectedList.setName( newNameTextField.getString() );\nm_manager.add( m_selectedList );\nrefreshList();"/>
+            <Property name="targetDisplayable" value="listOfLists"/>
+            <Property name="targetForwardDisplayable" value="renameListForm"/>
+            <Property name="actionSource" value="okRenameCommand"/>
+            <Property name="actionOrigin" value="renameListForm"/>
+        </DesignComponent>
+        <DesignComponent id="exitCommand1" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Exit"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="EXIT"/>
+        </DesignComponent>
+        <DesignComponent id="cancelCommand1" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Cancel"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="CANCEL"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction14" typeid="MIDP:CommandAction">
+            <Property name="targetDisplayable" value="listOfLists"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property name="actionSource" value="cancelCommand1"/>
+            <Property name="actionOrigin" value="renameListForm"/>
+        </DesignComponent>
+        <DesignComponent id="renameListCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Rename List"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="SCREEN"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction15" typeid="MIDP:CommandAction">
+            <Property name="preUserCode" value="m_selectedList = m_manager.getList(\n        listOfLists.getString( listOfLists.getSelectedIndex() ) );"/>
+            <Property name="postUserCode" value="newNameTextField.setString( m_selectedList.getName() );"/>
+            <Property name="targetDisplayable" value="renameListForm"/>
+            <Property name="targetForwardDisplayable" value="listOfLists"/>
+            <Property name="actionSource" value="renameListCommand"/>
+            <Property name="actionOrigin" value="listOfLists"/>
+        </DesignComponent>
+        <DesignComponent id="newNameTextField" typeid="MIDP:javax.microedition.lcdui.TextField">
+            <Property name="label" value="STRING:Enter new title"/>
+            <Property name="maxSize" value="120"/>
+            <ContainerProperty name="commands"/>
+        </DesignComponent>
+        <DesignComponent id="selectItem" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Select Item"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="ITEM"/>
+        </DesignComponent>
+        <DesignComponent id="addItemForm" typeid="MIDP:javax.microedition.lcdui.Form">
+            <Property name="title" value="STRING:Add Item"/>
+            <ContainerProperty name="commands">
+                <ContainerPropertyItem value="$CommandAction9"/>
+                <ContainerPropertyItem value="$CommandAction12"/>
+            </ContainerProperty>
+            <ContainerProperty name="items">
+                <ContainerPropertyItem value="addItemTextField"/>
+            </ContainerProperty>
+        </DesignComponent>
+        <DesignComponent id="addItemOkCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Ok"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="OK"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction9" typeid="MIDP:CommandAction">
+            <Property name="preUserCode" value="GroceryItem item = new GroceryItem(addItemTextField.getString(), false);\nm_selectedList.addItem( item );\nrefreshSelectedToList();"/>
+            <Property name="targetDisplayable" value="groceryList"/>
+            <Property name="targetForwardDisplayable" value="addItemForm"/>
+            <Property name="actionSource" value="addItemOkCommand"/>
+            <Property name="actionOrigin" value="addItemForm"/>
+        </DesignComponent>
+        <DesignComponent id="addItemCancelCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Cancel"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="CANCEL"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction12" typeid="MIDP:CommandAction">
+            <Property name="targetDisplayable" value="groceryList"/>
+            <Property name="targetForwardDisplayable" value="addItemForm"/>
+            <Property name="actionSource" value="addItemCancelCommand"/>
+            <Property name="actionOrigin" value="addItemForm"/>
+        </DesignComponent>
+        <DesignComponent id="addItemTextField" typeid="MIDP:javax.microedition.lcdui.TextField">
+            <Property name="label" value="STRING:Item description"/>
+            <Property name="maxSize" value="120"/>
+            <ContainerProperty name="commands"/>
+        </DesignComponent>
+        <DesignComponent id="PurgeSelectedCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Purge Selected"/>
+            <Property name="priority" value="4"/>
+            <Property name="type" value="ITEM"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction16" typeid="MIDP:CommandAction">
+            <Property name="preUserCode" value="boolean [] flags = new boolean[ groceryList.size() ];\nint selected = groceryList.getSelectedFlags( flags );\nSystem.out.println(\&quot;List count: \&quot; + Integer.toString(selected));\n\n/** Fixer for vector array */\nint fix=0;\nint initialSize = groceryList.size();\n\nfor( int index=0; index&lt;initialSize; index++ ) {\n    /** Delete selected item */\n    if(flags[index]==true) {\n        System.out.println(\&quot;Get selected: \&quot; + Integer.toString(index));\n        m_selectedList.removeItem( index-fix );\n        groceryList.delete( index-fix );\n        fix++;\n    }\n}\n\n"/>
+            <Property name="targetDisplayable" value="groceryList"/>
+            <Property name="targetForwardDisplayable" value="groceryList"/>
+            <Property name="actionSource" value="PurgeSelectedCommand"/>
+            <Property name="actionOrigin" value="groceryList"/>
+        </DesignComponent>
+        <DesignComponent id="selectCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Select"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="ITEM"/>
+        </DesignComponent>
+        <DesignComponent id="spacer1" typeid="MIDP-2:javax.microedition.lcdui.Spacer">
+            <Property name="minWidth" value="1000"/>
+            <Property name="minHeight" value="1"/>
+        </DesignComponent>
+        <DesignComponent id="stringItem2" typeid="MIDP:javax.microedition.lcdui.StringItem">
+            <Property name="label" value="STRING:License\n"/>
+            <Property name="text" value="STRING:GPL (See http://www.gnu.org/copyleft/gpl.html for more information)"/>
+            <ContainerProperty name="commands"/>
+        </DesignComponent>
+        <DesignComponent id="stringItem3" typeid="MIDP:javax.microedition.lcdui.StringItem">
+            <Property name="label" value="STRING:Donations\n"/>
+            <Property name="text" value="STRING:If you like this application, please make a donation via PayPal. See more information on http://www.substanceofcode.com"/>
+            <ContainerProperty name="commands"/>
+        </DesignComponent>
+        <DesignComponent id="okSplashCommand1" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Ok"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="OK"/>
+        </DesignComponent>
+        <DesignComponent id="okCommand1" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Ok"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="OK"/>
+        </DesignComponent>
+        <DesignComponent id="splashScreen" typeid="MIDP:substanceofcode.SplashCanvas">
+            <Property name="%%1_1_midlet" value="this"/>
+            <ContainerProperty name="commands">
+                <ContainerPropertyItem value="$CommandAction17"/>
+            </ContainerProperty>
+        </DesignComponent>
+        <DesignComponent id="okSplashCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Ok"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="OK"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction17" typeid="MIDP:CommandAction">
+            <Property name="postUserCode" value="refreshList();"/>
+            <Property name="targetDisplayable" value="listOfLists"/>
+            <Property name="targetForwardDisplayable" value="splashScreen"/>
+            <Property name="actionSource" value="okSplashCommand"/>
+            <Property name="actionOrigin" value="splashScreen"/>
+        </DesignComponent>
+        <DesignComponent id="manageListCmd" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Manage List"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="SCREEN"/>
+        </DesignComponent>
+        <DesignComponent id="backCommand2" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Back"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="BACK"/>
+        </DesignComponent>
+        <DesignComponent id="moveItemCmd" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Move up"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="ITEM"/>
+        </DesignComponent>
+        <DesignComponent id="moveItemDownCmd" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Move down"/>
+            <Property name="longLabel" value="STRING:null"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="ITEM"/>
+        </DesignComponent>
+        <DesignComponent id="arrangeList" typeid="MIDP:substanceofcode.groceries.ui.EditableList">
+            <Property name="%%1_1_midlet" value="this"/>
+            <Property name="%%1_2_list" value="m_selectedList"/>
+            <Property name="title" value="STRING:Arrange List"/>
+            <ContainerProperty name="commands">
+                <ContainerPropertyItem value="$CommandAction21"/>
+            </ContainerProperty>
+        </DesignComponent>
+        <DesignComponent id="backCommand3" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Back"/>
+            <Property name="priority" value="1"/>
+            <Property name="type" value="BACK"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction21" typeid="MIDP:CommandAction">
+            <Property name="preUserCode" value="m_selectedList = arrangeList.getList();\nrefreshSelectedToList();"/>
+            <Property name="targetDisplayable" value="groceryList"/>
+            <Property name="targetForwardDisplayable" value="arrangeList"/>
+            <Property name="actionSource" value="backCommand3"/>
+            <Property name="actionOrigin" value="arrangeList"/>
+        </DesignComponent>
+        <DesignComponent id="arrangeCmd" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property name="label" value="STRING:Arrange List"/>
+            <Property name="priority" value="3"/>
+            <Property name="type" value="SCREEN"/>
+        </DesignComponent>
+        <DesignComponent id="$CommandAction22" typeid="MIDP:CommandAction">
+            <Property name="preUserCode" value="refreshSelectedFromList();\nm_manager.update( m_selectedList );"/>
+            <Property name="targetDisplayable" value="arrangeList"/>
+            <Property name="targetForwardDisplayable" value="groceryList"/>
+            <Property name="actionSource" value="arrangeCmd"/>
+            <Property name="actionOrigin" value="groceryList"/>
+        </DesignComponent>
+    </DesignDocument>
+    <FlowDocument version="1.0">
+        <Node id="$MobileDevice" x="125" y="400"/>
+        <Node id="listOfLists" x="625" y="400"/>
+        <Node id="addListForm" x="875" y="175"/>
+        <Node id="groceryList" x="875" y="325"/>
+        <Node id="aboutForm" x="875" y="475"/>
+        <Node id="renameListForm" x="875" y="625"/>
+        <Node id="addItemForm" x="1125" y="325"/>
+        <Node id="splashScreen" x="375" y="400"/>
+        <Node id="arrangeList" x="1125" y="475"/>
+    </FlowDocument>
+</MVDData>
