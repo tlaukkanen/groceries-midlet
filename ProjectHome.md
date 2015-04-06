@@ -1,0 +1,1 @@
+The Groceries application can be used to create grocery lists and keep track on what items you have already collected. The application can store multiple lists and one list can hold multiple items.  This source gives you the option to license under either the Apache License 2.0, LGPL v2.1 or later, or the GPL v2.1 or later.
